@@ -1,6 +1,7 @@
 # 🧠 Brain Tumor Detection Using CNN
 
 ## 🔍 Overview
+![](https://github.com/Pu5hk4r/BrainTumourDetection/blob/main/Assets/AnimationBrain-min.gif)
 ![](https://github.com/Pu5hk4r/PROJECT-BRAIN-TUMOR-DETECTION/blob/main/Assets/an_overview_of_brain_tumours.png)
 
 This project is a web-based application for automated **brain tumor detection** from MRI images using a Convolutional Neural Network (CNN). The goal is to assist medical professionals and patients by providing fast, AI-based preliminary diagnostics. The app is built using **Flask** as the web framework, **TensorFlow/Keras** for the deep learning model, and **MongoDB Atlas** to store patient records and prediction results.

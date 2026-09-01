@@ -1,0 +1,2 @@
+MONGO_URI=mongodb+srv://test:test@cluster0.sxci1.mongodb.net/?retryWrites=true&w=majority
+FLASK_SECRET_KEY=nielitchandigarhpunjabpolice

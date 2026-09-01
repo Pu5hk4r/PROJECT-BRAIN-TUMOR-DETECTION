@@ -97,6 +97,7 @@ def resultbt():
                 # Return the result to the user
                 return render_template('resultbt.html', filename=filename, fn=firstname, ln=lastname, age=age, r=predicted_class, gender=gender)
 
+
             finally:
                 # Safely delete the temp file after it's been used
                 if os.path.exists(temp_path):

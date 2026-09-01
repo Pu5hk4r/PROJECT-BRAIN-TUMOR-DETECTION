@@ -9,20 +9,28 @@ from werkzeug.utils import secure_filename
 import tempfile
 from pymongo import MongoClient
 from datetime import datetime
+from dotenv import load_dotenv 
 
-# Load the Brain Tumor CNN Model
+
+load_dotenv()
+
+
 braintumor_model = load_model('models/braintumor_binary.h5')
 
-# Configuring Flask application
+
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching for images
-app.secret_key = "nielitchandigarhpunjabpolice"  # Secret key for session management
 
-# Allowed image file extensions
+
+app.secret_key = os.getenv('FLASK_SECRET_KEY')  
+
+
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
-# Connect to MongoDB Atlas
-client = MongoClient("mongodb+srv://test:test@cluster0.sxci1.mongodb.net/?retryWrites=true&w=majority")
+
+MONGO_URI = os.getenv('MONGO_URI')
+client = MongoClient(MONGO_URI)
+
 db = client['brain_tumor_detection']  # Database name
 collection = db['btpredictions']  # Collection name
 
@@ -88,6 +96,7 @@ def resultbt():
 
                 # Return the result to the user
                 return render_template('resultbt.html', filename=filename, fn=firstname, ln=lastname, age=age, r=predicted_class, gender=gender)
+
 
             finally:
                 # Safely delete the temp file after it's been used

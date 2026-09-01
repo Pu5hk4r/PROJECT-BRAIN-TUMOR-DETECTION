@@ -1,20 +1,30 @@
-# Using Python 3.9 base image
-FROM python:3.9
+FROM python:3.9-slim
 
-# Set the working directory to /code
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
 WORKDIR /code
 
-# Install necessary system dependencies, including libGL.so.1
-RUN apt-get update && apt-get install -y libgl1 && apt-get clean
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libgl1 libglib2.0-0 && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy requirements.txt to /code
-COPY ./requirements.txt /code/requirements.txt
-
-# Install dependencies from requirements.txt
+COPY requirements.txt . 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-# Copy the entire project content to /code
-COPY . /code
+COPY main.py .
+COPY models/ models/
+COPY templates/ templates/
+COPY static/ static/
 
-# CMD to run Gunicorn
+
+RUN useradd --create-home --shell /bin/bash appuser && \
+    chown -R appuser:appuser /code
+USER appuser
+
+EXPOSE 7860
+
+
 CMD ["gunicorn", "main:app", "-b", "0.0.0.0:7860"]

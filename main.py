@@ -43,6 +43,7 @@ def brain_tumor():
     """Render the HTML form for the user to upload an image."""
     return render_template('braintumor.html')
 
+
 @app.route('/resultbt', methods=['POST'])
 def resultbt():
     """Process the uploaded image and save prediction results to MongoDB."""
@@ -90,6 +91,7 @@ def resultbt():
                     "confidence_score": float(confidence),  # Ensure it's a standard float for JSON serialization
                     "timestamp": datetime.utcnow()
                 }
+
 
                 # Insert data into MongoDB
                 collection.insert_one(result)
